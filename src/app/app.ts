@@ -1,4 +1,4 @@
-import { Component, inject, type OnInit } from '@angular/core';
+import { Component, inject, signal, type OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Header } from './shared/components/header/header';
 import { Footer } from './shared/components/footer/footer';
@@ -11,22 +11,4 @@ import type { Product } from './shared/types/types';
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
-export class App implements OnInit {
-  supabaseService = inject(SupabaseService);
-
-  products: Product[] = [];
-
-  ngOnInit() {
-    this.loadProducts();
-  }
-
-  async loadProducts() {
-    const { data, error } = await this.supabaseService.getProducts();
-    if (error) {
-      console.error('Error fetching products:', error);
-    } else {
-      this.products = data;
-      console.table(this.products);
-    }
-  }
-}
+export class App {}
