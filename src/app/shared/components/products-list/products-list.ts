@@ -26,8 +26,6 @@ export class ProductsList implements OnInit {
     try {
       const data = await this.supabaseService.getProducts();
       this.products.set(data);
-
-      console.table(this.products());
     } catch (error) {
       console.error('Erro:', error);
     }
