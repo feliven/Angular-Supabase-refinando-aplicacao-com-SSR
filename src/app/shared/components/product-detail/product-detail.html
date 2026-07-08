@@ -6,7 +6,7 @@
     <span class="back-text">Detalhes do produto</span>
   </div>
 
-  @if (product$ | async; as product) {
+  @if (product(); as product) {
     <div class="content">
       <div class="product-image">
         <img [src]="product.imageDetails" alt="{{ product.title }}" />
