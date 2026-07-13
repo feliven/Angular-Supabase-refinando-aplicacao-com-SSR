@@ -10,6 +10,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { SupabaseService } from '../../services/supabase.service';
+import { Spinner } from '../spinner/spinner';
 
 @Component({
   selector: 'app-product-detail',
@@ -23,6 +24,7 @@ import { SupabaseService } from '../../services/supabase.service';
     MatSelectModule,
     MatCheckboxModule,
     MatInputModule,
+    Spinner,
   ],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.css',

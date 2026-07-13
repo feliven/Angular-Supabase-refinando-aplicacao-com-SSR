@@ -1,7 +1,4 @@
-<div class="loading-placeholder" *appShellRenderDirective>
-  <mat-spinner></mat-spinner>
-  <p>Carregando produtos...</p>
-</div>
+<app-spinner />
 
 @for (group of productsByCategory(); track group.category) {
   <div class="product-category">
