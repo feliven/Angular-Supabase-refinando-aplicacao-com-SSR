@@ -10,7 +10,7 @@
 
   @if (product(); as product) {
     <div class="content">
-      <div class="product-image">
+      <div class="product-image" *appShellNoRenderDirective>
         <img [src]="product.imageDetails" alt="{{ product.title }}" />
       </div>
 

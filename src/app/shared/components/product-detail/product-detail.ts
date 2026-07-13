@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { SupabaseService } from '../../services/supabase.service';
 import { Spinner } from '../spinner/spinner';
+import { ShellNoRenderDirective } from '../../../directives/shell-no-render.directive';
 
 @Component({
   selector: 'app-product-detail',
@@ -25,6 +26,7 @@ import { Spinner } from '../spinner/spinner';
     MatCheckboxModule,
     MatInputModule,
     Spinner,
+    ShellNoRenderDirective,
   ],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.css',
