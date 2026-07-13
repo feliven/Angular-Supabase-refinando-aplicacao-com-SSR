@@ -1,11 +1,14 @@
 import { Component, inject, signal, type OnInit } from '@angular/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 import type { Product } from '../../types/types';
 import { ProductCard } from '../product-card/product-card';
 import { SupabaseService } from '../../services/supabase.service';
+import { ShellRenderDirective } from '../../../directives/shell-render.directive';
 
 @Component({
   selector: 'app-products-list',
-  imports: [ProductCard],
+  imports: [MatProgressSpinnerModule, ProductCard, ShellRenderDirective],
   templateUrl: './products-list.html',
   styleUrl: './products-list.css',
 })
