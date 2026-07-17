@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { SupabaseService } from '../../services/supabase.service';
 import { Spinner } from '../spinner/spinner';
 import { ShellNoRenderDirective } from '../../../directives/shell-no-render.directive';
+import { Title, Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-product-detail',
@@ -32,16 +33,42 @@ import { ShellNoRenderDirective } from '../../../directives/shell-no-render.dire
   styleUrl: './product-detail.css',
 })
 export class ProductDetail implements OnInit {
+  private route = inject(ActivatedRoute);
+  private supabaseService = inject(SupabaseService);
+  private readonly title = inject(Title);
+  private readonly meta = inject(Meta);
+
   quantities: number[] = [1, 2, 3, 4, 5];
   product = signal<Product | null>(null);
 
-  private route = inject(ActivatedRoute);
-  private supabaseService = inject(SupabaseService);
-
   ngOnInit(): void {
     const productId = parseInt(this.route.snapshot.paramMap.get('id') ?? '0', 10);
-    this.supabaseService.getProductById(productId).then((data) => {
-      this.product.set(data || null);
+    this.supabaseService.getProductById(productId).then((productData) => {
+      this.product.set(productData);
+      this.setTitleMetadata(productData);
     });
+  }
+
+  setTitleMetadata(product: Product) {
+    this.title.setTitle(`${product.title}`);
+    this.meta.addTags([
+      {
+        name: 'description',
+        content: product.ingredients,
+      },
+      { property: 'og:title', content: product.title },
+      {
+        property: 'og:description',
+        content: product.ingredients,
+      },
+      {
+        property: 'og:image',
+        content: product.imageDetails,
+      },
+      {
+        name: 'twitter:card',
+        content: 'summary_large_image',
+      },
+    ]);
   }
 }
