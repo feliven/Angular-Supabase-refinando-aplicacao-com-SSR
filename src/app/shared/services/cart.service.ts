@@ -1,36 +1,35 @@
-import { Service } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { computed, Service, signal } from '@angular/core';
 import type { CartItem, Product } from '../types/types';
 
 @Service()
 export class CartService {
-  private cartItemsSubject = new BehaviorSubject<CartItem[]>([]);
-  cartItems$ = this.cartItemsSubject.asObservable();
+  private _cartItems = signal<CartItem[]>([]);
+  cartItems = this._cartItems.asReadonly();
 
-  private getCurrentItems() {
-    return this.cartItemsSubject.getValue();
-  }
-
-  addCartItem(product: Product) {
-    const currentItems = this.getCurrentItems();
-    const itemIndex = currentItems.findIndex((item) => {
-      return item.product.id === product.id;
-    });
-
-    if (itemIndex > -1) {
-      currentItems[itemIndex].quantity++;
-    } else {
-      currentItems.push({ product: product, quantity: 1 });
-    }
-
-    this.cartItemsSubject.next(currentItems);
-  }
-
-  getTotalQuantity(): number {
-    const total = this.getCurrentItems().reduce((acc, item) => {
+  totalQuantity = computed(() => {
+    return this._cartItems().reduce((acc, item) => {
       return acc + item.quantity;
     }, 0);
+  });
 
-    return total;
+  addCartItem(product: Product) {
+    this._cartItems.update((currentItems) => {
+      const itemIndex = currentItems.findIndex((item) => {
+        return item.product.id === product.id;
+      });
+
+      const updatedItems = [...currentItems];
+
+      if (itemIndex > -1) {
+        updatedItems[itemIndex] = {
+          ...updatedItems[itemIndex],
+          quantity: updatedItems[itemIndex].quantity + 1,
+        };
+      } else {
+        updatedItems.push({ product: product, quantity: 1 });
+      }
+
+      return updatedItems;
+    });
   }
 }

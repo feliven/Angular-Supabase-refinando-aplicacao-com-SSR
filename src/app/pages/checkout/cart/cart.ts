@@ -25,17 +25,11 @@ import { CartService } from '../../../shared/services/cart.service';
   templateUrl: './cart.html',
   styleUrl: './cart.css',
 })
-export class Cart implements OnInit {
+export class Cart {
   private cartService = inject(CartService);
 
-  cartItems = signal<CartItem[]>([]);
+  cartItems = this.cartService.cartItems;
   total = signal<number>(0);
-
-  ngOnInit(): void {
-    this.cartService.cartItems$.subscribe((items) => {
-      this.cartItems.set(items);
-    });
-  }
 
   getQuantities(currentQuantity: number): number[] {
     const maxQuantity = Math.max(currentQuantity, 10);

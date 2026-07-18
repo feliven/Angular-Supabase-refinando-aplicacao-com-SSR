@@ -1,4 +1,4 @@
-import { Component, inject, signal, type OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -11,14 +11,8 @@ import { CartService } from '../../services/cart.service';
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
-export class Header implements OnInit {
+export class Header {
   private cartService = inject(CartService);
 
-  totalQuantity = signal(0);
-
-  ngOnInit(): void {
-    this.cartService.cartItems$.subscribe(() => {
-      this.totalQuantity.set(this.cartService.getTotalQuantity());
-    });
-  }
+  totalQuantity = this.cartService.totalQuantity;
 }
