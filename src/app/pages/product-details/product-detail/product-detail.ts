@@ -1,7 +1,8 @@
 import { CurrencyPipe } from '@angular/common';
 import { Component, inject, signal, type OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Title, Meta } from '@angular/platform-browser';
+
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -12,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import type { Product } from '../../../shared/types/types';
 import { Spinner } from '../../../shared/components/spinner/spinner';
 import { ShellNoRenderDirective } from '../../../shared/directives/shell-no-render.directive';
+import { CartService } from '../../../shared/services/cart.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -33,11 +35,14 @@ import { ShellNoRenderDirective } from '../../../shared/directives/shell-no-rend
 })
 export class ProductDetail implements OnInit {
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private cartService = inject(CartService);
   private readonly title = inject(Title);
   private readonly meta = inject(Meta);
 
   quantities: number[] = [1, 2, 3, 4, 5];
   product = signal<Product | null>(null);
+  selectedQuantity = signal(1);
 
   ngOnInit(): void {
     const productData = this.route.snapshot.data['product'] as Product;
@@ -46,6 +51,11 @@ export class ProductDetail implements OnInit {
     if (productData) {
       this.setTitleMetadata(productData);
     }
+  }
+
+  addToCart(product: Product, quantity: number) {
+    this.cartService.addCartItem(product, quantity);
+    this.router.navigate(['/checkout']);
   }
 
   setTitleMetadata(product: Product) {

@@ -12,7 +12,7 @@ export class CartService {
     }, 0);
   });
 
-  addCartItem(product: Product) {
+  addCartItem(product: Product, quantity: number = 1) {
     this._cartItems.update((currentItems) => {
       const itemIndex = currentItems.findIndex((item) => {
         return item.product.id === product.id;
@@ -23,10 +23,10 @@ export class CartService {
       if (itemIndex > -1) {
         updatedItems[itemIndex] = {
           ...updatedItems[itemIndex],
-          quantity: updatedItems[itemIndex].quantity + 1,
+          quantity: updatedItems[itemIndex].quantity + quantity,
         };
       } else {
-        updatedItems.push({ product: product, quantity: 1 });
+        updatedItems.push({ product, quantity });
       }
 
       return updatedItems;
