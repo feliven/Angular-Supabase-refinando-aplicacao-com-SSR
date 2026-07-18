@@ -1,6 +1,6 @@
 import { afterNextRender, Component, inject, type OnInit } from '@angular/core';
-import { ProductsList } from '../../shared/components/products-list/products-list';
 import { Meta, Title } from '@angular/platform-browser';
+import { ProductsList } from './products-list/products-list';
 
 @Component({
   selector: 'app-home',

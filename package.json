@@ -10,7 +10,7 @@
     "serve:ssr:deleite": "node dist/deleite/server/server.mjs"
   },
   "private": true,
-  "packageManager": "pnpm@11.5.1",
+  "packageManager": "pnpm@11.13.1",
   "dependencies": {
     "@angular/cdk": "^22.0.2",
     "@angular/common": "^22.0.0",

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { ShellRenderDirective } from '../../../directives/shell-render.directive';
+import { ShellRenderDirective } from '../../directives/shell-render.directive';
 
 @Component({
   selector: 'app-spinner',

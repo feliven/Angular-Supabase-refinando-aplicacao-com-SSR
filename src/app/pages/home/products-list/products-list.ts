@@ -1,9 +1,8 @@
 import { Component, inject, signal, type OnInit } from '@angular/core';
-
-import type { Product } from '../../types/types';
-import { ProductCard } from '../product-card/product-card';
-import { SupabaseService } from '../../services/supabase.service';
-import { Spinner } from '../spinner/spinner';
+import { Spinner } from '../../../shared/components/spinner/spinner';
+import { SupabaseService } from '../../../shared/services/supabase.service';
+import type { Product } from '../../../shared/types/types';
+import { ProductCard } from './product-card/product-card';
 
 @Component({
   selector: 'app-products-list',

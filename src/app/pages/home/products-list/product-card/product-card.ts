@@ -1,7 +1,7 @@
 import { Component, inject, input } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
-import type { Product } from '../../types/types';
+import type { Product } from '../../../../shared/types/types';
 
 @Component({
   selector: 'app-product-card',

@@ -1,7 +1,7 @@
 import { CurrencyPipe } from '@angular/common';
 import { Component, inject, signal, type OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import type { Product } from '../../types/types';
+import { Title, Meta } from '@angular/platform-browser';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -9,9 +9,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { Spinner } from '../spinner/spinner';
-import { ShellNoRenderDirective } from '../../../directives/shell-no-render.directive';
-import { Title, Meta } from '@angular/platform-browser';
+import type { Product } from '../../../shared/types/types';
+import { Spinner } from '../../../shared/components/spinner/spinner';
+import { ShellNoRenderDirective } from '../../../shared/directives/shell-no-render.directive';
 
 @Component({
   selector: 'app-product-detail',
