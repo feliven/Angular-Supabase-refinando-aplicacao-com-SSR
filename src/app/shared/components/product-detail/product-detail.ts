@@ -9,7 +9,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { SupabaseService } from '../../services/supabase.service';
 import { Spinner } from '../spinner/spinner';
 import { ShellNoRenderDirective } from '../../../directives/shell-no-render.directive';
 import { Title, Meta } from '@angular/platform-browser';
@@ -34,7 +33,6 @@ import { Title, Meta } from '@angular/platform-browser';
 })
 export class ProductDetail implements OnInit {
   private route = inject(ActivatedRoute);
-  private supabaseService = inject(SupabaseService);
   private readonly title = inject(Title);
   private readonly meta = inject(Meta);
 
@@ -42,11 +40,12 @@ export class ProductDetail implements OnInit {
   product = signal<Product | null>(null);
 
   ngOnInit(): void {
-    const productId = parseInt(this.route.snapshot.paramMap.get('id') ?? '0', 10);
-    this.supabaseService.getProductById(productId).then((productData) => {
-      this.product.set(productData);
+    const productData = this.route.snapshot.data['product'] as Product;
+
+    this.product.set(productData);
+    if (productData) {
       this.setTitleMetadata(productData);
-    });
+    }
   }
 
   setTitleMetadata(product: Product) {
