@@ -25,4 +25,12 @@ export class CartService {
 
     this.cartItemsSubject.next(currentItems);
   }
+
+  getTotalQuantity(): number {
+    const total = this.getCurrentItems().reduce((acc, item) => {
+      return acc + item.quantity;
+    }, 0);
+
+    return total;
+  }
 }
