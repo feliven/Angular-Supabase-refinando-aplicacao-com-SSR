@@ -13,6 +13,7 @@ mat-toolbar {
 
 .logo {
   height: 32px;
+  cursor: pointer;
 }
 
 mat-icon {

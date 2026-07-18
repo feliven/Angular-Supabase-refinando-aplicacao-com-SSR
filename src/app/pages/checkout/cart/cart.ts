@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal, type OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DecimalPipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDividerModule } from '@angular/material/divider';
 import type { CartItem } from '../../../shared/types/types';
+import { CartService } from '../../../shared/services/cart.service';
 
 @Component({
   selector: 'app-cart',
@@ -24,9 +25,17 @@ import type { CartItem } from '../../../shared/types/types';
   templateUrl: './cart.html',
   styleUrl: './cart.css',
 })
-export class Cart {
+export class Cart implements OnInit {
+  private cartService = inject(CartService);
+
   cartItems = signal<CartItem[]>([]);
   total = signal<number>(0);
+
+  ngOnInit(): void {
+    this.cartService.cartItems$.subscribe((items) => {
+      this.cartItems.set(items);
+    });
+  }
 
   getQuantities(currentQuantity: number): number[] {
     const maxQuantity = Math.max(currentQuantity, 10);
