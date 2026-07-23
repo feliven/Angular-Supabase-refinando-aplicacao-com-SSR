@@ -28,20 +28,14 @@ describe('CartService', () => {
     vi.clearAllMocks();
 
     mockSelect.mockReturnValue({
-      overrideTypes: mockOverrideTypes.mockReturnValue(
-        Promise.resolve({ data: [], error: null })
-      ),
+      overrideTypes: mockOverrideTypes.mockReturnValue(Promise.resolve({ data: [], error: null })),
     });
 
     mockDelete.mockReturnValue({
-      eq: mockEq.mockReturnValue(
-        Promise.resolve({ error: null })
-      ),
+      eq: mockEq.mockReturnValue(Promise.resolve({ error: null })),
     });
 
-    mockUpsert.mockReturnValue(
-      Promise.resolve({ error: null })
-    );
+    mockUpsert.mockReturnValue(Promise.resolve({ error: null }));
 
     // Spy on the real supabaseClient.from method
     fromSpy = vi.spyOn(supabaseClient, 'from').mockImplementation((table: string): any => {
@@ -70,12 +64,12 @@ describe('CartService', () => {
   it('should remove item from cart when DB deletion succeeds', async () => {
     const cartItem: CartItem = { product, quantity: 2 };
 
-    await service.addCartItem(product, 2);
+    await service.addUpdateCart(product, 2);
     expect(service.cartItems()).toEqual([cartItem]);
 
     mockEq.mockReturnValue(Promise.resolve({ error: null }));
 
-    await service.removeCartItem(product.id);
+    await service.removeFromCart(product.id);
 
     expect(service.cartItems()).toEqual([]);
   });
@@ -83,13 +77,13 @@ describe('CartService', () => {
   it('should not remove item from cart when DB deletion fails', async () => {
     const cartItem: CartItem = { product, quantity: 2 };
 
-    await service.addCartItem(product, 2);
+    await service.addUpdateCart(product, 2);
     expect(service.cartItems()).toEqual([cartItem]);
 
     const dbError = { message: 'Database delete failed' };
     mockEq.mockReturnValue(Promise.resolve({ error: dbError }));
 
-    await service.removeCartItem(product.id);
+    await service.removeFromCart(product.id);
 
     expect(service.cartItems()).toEqual([cartItem]);
   });
@@ -98,7 +92,7 @@ describe('CartService', () => {
     const dbError = { message: 'Database save failed' };
     mockUpsert.mockReturnValue(Promise.resolve({ error: dbError }));
 
-    await service.addCartItem(product, 2);
+    await service.addUpdateCart(product, 2);
 
     expect(service.cartItems()).toEqual([]);
   });

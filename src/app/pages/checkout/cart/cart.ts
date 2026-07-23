@@ -43,12 +43,12 @@ export class Cart {
     });
 
     if (index !== -1) {
-      this.cartService.addCartItem(cartItems[index].product, newQuantity);
+      this.cartService.addUpdateCart(cartItems[index].product, newQuantity);
     }
   }
 
   removeItem(productId: number) {
-    this.cartService.removeCartItem(productId);
+    this.cartService.removeFromCart(productId);
   }
 
   finalizePurchase() {}

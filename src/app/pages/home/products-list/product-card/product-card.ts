@@ -29,9 +29,6 @@ export class ProductCard {
   }
 
   async addToCart(product: Product) {
-    await this.cartService.addCartItem(product);
-    await this.cartService.getCartItems().then((cartItems) => {
-      console.table(cartItems);
-    });
+    await this.cartService.addUpdateCart(product);
   }
 }

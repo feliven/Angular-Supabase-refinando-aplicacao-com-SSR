@@ -54,7 +54,7 @@ export class ProductDetail implements OnInit {
   }
 
   addToCart(product: Product, quantity: number) {
-    this.cartService.addCartItem(product, quantity);
+    this.cartService.addUpdateCart(product, quantity);
     this.router.navigate(['/checkout']);
   }
 

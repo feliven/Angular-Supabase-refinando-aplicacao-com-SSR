@@ -17,22 +17,7 @@ export class CartService {
     this.loadCart();
   }
 
-  getCartItems(): PromiseLike<CartItem[]> {
-    return supabaseClient
-      .from('cart_items')
-      .select('quantity, product:product_id (id, title, price, image)')
-      .overrideTypes<CartItem[]>()
-      .then(({ data, error }) => {
-        if (error) {
-          console.error('Error fetching cart items:', error);
-          return [];
-        } else {
-          return data || [];
-        }
-      });
-  }
-
-  async addCartItem(product: Product, quantity: number = 1) {
+  async addUpdateCart(product: Product, quantity: number = 1) {
     const itemIndex = this.cartItems().findIndex((item) => {
       return item.product.id === product.id;
     });
@@ -59,25 +44,46 @@ export class CartService {
     }
   }
 
-  async removeCartItem(productId: number) {
+  async removeFromCart(productId: number) {
     try {
       await this.deleteCartItem(productId);
 
       this._cartItems.update((items) => {
-        const updatedItems = [...items];
-        const index = updatedItems.findIndex((item) => {
-          return item.product.id === productId;
+        const updatedItems = items.filter((item) => {
+          return item.product.id !== productId;
         });
-
-        if (index > -1) {
-          updatedItems.splice(index, 1);
-        }
 
         return updatedItems;
       });
     } catch (error) {
       console.error('Error removing cart item', error);
     }
+  }
+
+  private async loadCart() {
+    try {
+      const savedItems = await this.getCartItems();
+      console.table(savedItems);
+
+      this._cartItems.set(savedItems);
+    } catch (error) {
+      console.error('Error displaying saved cart items', error);
+    }
+  }
+
+  private getCartItems(): PromiseLike<CartItem[]> {
+    return supabaseClient
+      .from('cart_items')
+      .select('quantity, product:product_id (id, title, price, image)')
+      .overrideTypes<CartItem[]>()
+      .then(({ data, error }) => {
+        if (error) {
+          console.error('Error fetching cart items:', error);
+          return [];
+        } else {
+          return data || [];
+        }
+      });
   }
 
   private saveCartItem(cartItem: CartItem): Promise<void> {
@@ -92,8 +98,7 @@ export class CartService {
       )
       .then(({ error }) => {
         if (error) {
-          console.error('Error saving cart items:', error);
-          throw error;
+          throw new Error(error.message);
         }
       });
 
@@ -107,22 +112,10 @@ export class CartService {
       .eq('product_id', id)
       .then(({ error }) => {
         if (error) {
-          console.error('Error deleting cart items:', error);
-          throw error;
+          throw new Error(error.message);
         }
       });
 
     return Promise.resolve(deletePromiseLike);
-  }
-
-  private async loadCart() {
-    try {
-      const savedItems = await this.getCartItems();
-      console.table(savedItems);
-
-      this._cartItems.set(savedItems);
-    } catch (error) {
-      console.error('Error displaying saved cart items', error);
-    }
   }
 }
