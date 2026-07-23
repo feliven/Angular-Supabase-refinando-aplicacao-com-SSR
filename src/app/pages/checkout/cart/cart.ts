@@ -7,7 +7,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDividerModule } from '@angular/material/divider';
-import type { CartItem } from '../../../shared/types/types';
 import { CartService } from '../../../shared/services/cart.service';
 
 @Component({
@@ -38,7 +37,9 @@ export class Cart {
 
   updateQuantity(productId: number, newQuantity: number) {}
 
-  removeItem(productId: number) {}
+  removeItem(productId: number) {
+    this.cartService.removeCartItem(productId);
+  }
 
   finalizePurchase() {}
 

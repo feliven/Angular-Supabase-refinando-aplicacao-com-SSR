@@ -60,6 +60,26 @@ export class CartService {
     });
 
     await promise;
+
+  async removeCartItem(productId: number) {
+    try {
+      await this.deleteCartItem(productId);
+
+      this._cartItems.update((items) => {
+        const updatedItems = [...items];
+        const index = updatedItems.findIndex((item) => {
+          return item.product.id === productId;
+        });
+
+        if (index > -1) {
+          updatedItems.splice(index, 1);
+        }
+
+        return updatedItems;
+      });
+    } catch (error) {
+      console.error('Error removing cart item', error);
+    }
   }
 
   private saveCartItem(cartItem: CartItem): Promise<void> {
@@ -75,10 +95,26 @@ export class CartService {
       .then(({ error }) => {
         if (error) {
           console.error('Error saving cart items:', error);
+          throw error;
         }
       });
 
     return Promise.resolve(upsertPromiseLike);
+  }
+
+  private deleteCartItem(id: number) {
+    const deletePromiseLike = supabaseClient
+      .from('cart_items')
+      .delete()
+      .eq('product_id', id)
+      .then(({ error }) => {
+        if (error) {
+          console.error('Error deleting cart items:', error);
+          throw error;
+        }
+      });
+
+    return Promise.resolve(deletePromiseLike);
   }
 
   private async loadCart() {
