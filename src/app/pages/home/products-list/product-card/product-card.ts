@@ -28,7 +28,10 @@ export class ProductCard {
     this.router.navigate(['/details', productId]);
   }
 
-  addToCart(product: Product) {
-    this.cartService.addCartItem(product);
+  async addToCart(product: Product) {
+    await this.cartService.addCartItem(product);
+    await this.cartService.getCartItems().then((cartItems) => {
+      console.table(cartItems);
+    });
   }
 }

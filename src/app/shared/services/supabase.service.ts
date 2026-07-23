@@ -1,20 +1,14 @@
 import { Injectable } from '@angular/core';
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import { environment } from '../../../environments/environment.development';
+import { SupabaseClient } from '@supabase/supabase-js';
 import type { Product } from '../types/types';
+import { supabaseClient } from './supabase.client';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SupabaseService {
-  private supabase: SupabaseClient;
-
-  constructor() {
-    this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
-  }
-
   getProducts(): PromiseLike<Product[]> {
-    return this.supabase
+    return supabaseClient
       .from('products')
       .select('*')
       .then(({ data, error }) => {
@@ -28,7 +22,7 @@ export class SupabaseService {
   }
 
   getProductById(id: number): PromiseLike<Product> {
-    return this.supabase
+    return supabaseClient
       .from('products')
       .select('*')
       .eq('id', id)
