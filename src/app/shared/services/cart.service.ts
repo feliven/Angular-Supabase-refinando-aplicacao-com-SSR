@@ -33,33 +33,31 @@ export class CartService {
   }
 
   async addCartItem(product: Product, quantity: number = 1) {
-    let promise: Promise<void> = Promise.resolve();
+    const itemIndex = this.cartItems().findIndex((item) => {
+      return item.product.id === product.id;
+    });
 
-    this._cartItems.update((currentItems) => {
-      const itemIndex = currentItems.findIndex((item) => {
-        return item.product.id === product.id;
-      });
+    const updatedItems = [...this.cartItems()];
 
-      const updatedItems = [...currentItems];
-
+    try {
       if (itemIndex > -1) {
         updatedItems[itemIndex] = {
           ...updatedItems[itemIndex],
-          quantity: updatedItems[itemIndex].quantity + quantity,
+          quantity: quantity,
         };
-        promise = this.saveCartItem(updatedItems[itemIndex]);
-        console.log('updatedItems[itemIndex]:', updatedItems[itemIndex]);
+
+        await this.saveCartItem(updatedItems[itemIndex]);
+        this._cartItems.set(updatedItems);
       } else {
         const newItem = { product, quantity };
+        await this.saveCartItem(newItem);
         updatedItems.push(newItem);
-        promise = this.saveCartItem(newItem);
-        console.log('newItem:', newItem);
+        this._cartItems.set(updatedItems);
       }
-
-      return updatedItems;
-    });
-
-    await promise;
+    } catch (error) {
+      console.error('Error adding cart item', error);
+    }
+  }
 
   async removeCartItem(productId: number) {
     try {

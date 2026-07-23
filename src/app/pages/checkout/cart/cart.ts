@@ -35,7 +35,17 @@ export class Cart {
     return Array.from({ length: maxQuantity }, (_, i) => i + 1);
   }
 
-  updateQuantity(productId: number, newQuantity: number) {}
+  updateQuantity(productId: number, newQuantity: number) {
+    const cartItems = this.cartItems();
+
+    const index = cartItems.findIndex((item) => {
+      return item.product.id === productId;
+    });
+
+    if (index !== -1) {
+      this.cartService.addCartItem(cartItems[index].product, newQuantity);
+    }
+  }
 
   removeItem(productId: number) {
     this.cartService.removeCartItem(productId);
