@@ -13,6 +13,10 @@ export class CartService {
     }, 0);
   });
 
+  constructor() {
+    this.loadCart();
+  }
+
   getCartItems(): PromiseLike<CartItem[]> {
     return supabaseClient
       .from('cart_items')
@@ -75,5 +79,16 @@ export class CartService {
       });
 
     return Promise.resolve(upsertPromiseLike);
+  }
+
+  private async loadCart() {
+    try {
+      const savedItems = await this.getCartItems();
+      console.table(savedItems);
+
+      this._cartItems.set(savedItems);
+    } catch (error) {
+      console.error('Error displaying saved cart items', error);
+    }
   }
 }
