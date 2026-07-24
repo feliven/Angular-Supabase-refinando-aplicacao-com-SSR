@@ -10,6 +10,10 @@ export const routes: Routes = [
     component: Home,
   },
   {
+    path: 'home',
+    redirectTo: '',
+  },
+  {
     path: 'details/:id',
     component: ProductDetails,
     resolve: { product: productResolver },

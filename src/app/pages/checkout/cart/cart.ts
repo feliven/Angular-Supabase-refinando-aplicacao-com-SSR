@@ -1,5 +1,5 @@
-import { Component, inject, signal, type OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import { DecimalPipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -26,9 +26,10 @@ import { CartService } from '../../../shared/services/cart.service';
 })
 export class Cart {
   private cartService = inject(CartService);
+  private router = inject(Router);
 
   cartItems = this.cartService.cartItems;
-  total = signal<number>(0);
+  totalValue = this.cartService.totalValue;
 
   getQuantities(currentQuantity: number): number[] {
     const maxQuantity = Math.max(currentQuantity, 10);
@@ -51,7 +52,11 @@ export class Cart {
     this.cartService.removeFromCart(productId);
   }
 
-  finalizePurchase() {}
+  finalizePurchase() {
+    alert('Compra finalizada');
+  }
 
-  continueShopping() {}
+  continueShopping() {
+    this.router.navigate(['/home']);
+  }
 }
