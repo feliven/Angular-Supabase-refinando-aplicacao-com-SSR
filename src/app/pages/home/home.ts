@@ -1,10 +1,11 @@
 import { afterNextRender, Component, inject, type OnInit } from '@angular/core';
+import { NgOptimizedImage } from '@angular/common';
 import { Meta, Title } from '@angular/platform-browser';
 import { ProductsList } from './products-list/products-list';
 
 @Component({
   selector: 'app-home',
-  imports: [ProductsList],
+  imports: [NgOptimizedImage, ProductsList],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
