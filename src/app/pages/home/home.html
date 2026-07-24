@@ -1,20 +1,4 @@
-<div class="banner">
-  <div class="banner-content">
-    <h1>
-      O momento mais <br />
-      refrescante do <br />
-      seu dia!
-    </h1>
-    <img
-      ngSrc="assets/images/hero-image.png"
-      width="579"
-      height="721"
-      alt="Mulher tomando milkshake"
-      class="left-image"
-      decoding="async"
-    />
-  </div>
-</div>
-@defer (hydrate on immediate) {
-  <app-products-list />
+@defer (hydrate on hover) {
+  <app-banner />
 }
+<app-products-list />
