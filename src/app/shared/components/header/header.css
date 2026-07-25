@@ -1,12 +1,6 @@
-:host {
-  position: fixed;
-  z-index: 1;
-  width: 100%;
-}
-
 mat-toolbar {
   background-color: #3f51b5;
-  height: 88px;
+  height: var(--header-height);
   padding: 16px;
   display: flex;
   justify-content: space-around;
@@ -26,8 +20,21 @@ mat-icon {
   color: white;
 }
 
-.toolbar-buttons button:first-child {
-  margin-right: 16px;
+a {
+  color: white;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline wavy;
+  }
+}
+
+.toolbar-buttons {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  a {
+    margin-top: 6px;
+  }
 }
 
 .cart-badge {
