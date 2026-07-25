@@ -12,7 +12,7 @@ describe('CartService', () => {
     id: 123,
     title: 'Test Product',
     price: 10,
-    image: 'test.png',
+    image: 'test.jpeg',
     ingredients: 'Test Ingredients',
     category: 'Test Category',
     imageDetails: 'Test Details',

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { SupabaseClient } from '@supabase/supabase-js';
 import type { Product } from '../types/types';
 import { supabaseClient } from './supabase.client';
 

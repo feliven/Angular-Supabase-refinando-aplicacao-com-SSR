@@ -1,9 +1,6 @@
 import { Routes } from '@angular/router';
 import { Home } from './pages/home/home';
-import { ProductDetails } from './pages/product-details/product-details';
 import { productResolver } from './product-resolver';
-import { Checkout } from './pages/checkout/checkout';
-import { About } from './pages/about/about';
 
 export const routes: Routes = [
   {
@@ -16,15 +13,16 @@ export const routes: Routes = [
   },
   {
     path: 'details/:id',
-    component: ProductDetails,
+    loadComponent: () =>
+      import('./pages/product-details/product-details').then((m) => m.ProductDetails),
     resolve: { product: productResolver },
   },
   {
     path: 'checkout',
-    component: Checkout,
+    loadComponent: () => import('./pages/checkout/checkout').then((m) => m.Checkout),
   },
   {
     path: 'about',
-    component: About,
+    loadComponent: () => import('./pages/about/about').then((m) => m.About),
   },
 ];
