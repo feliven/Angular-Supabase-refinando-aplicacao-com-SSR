@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
+    "start": "node scripts/set-env.mjs && ng serve",
+    "build": "node scripts/set-env.mjs && ng build",
+    "watch": "node scripts/set-env.mjs && ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:deleite": "node dist/deleite/server/server.mjs"
   },
@@ -23,6 +23,7 @@
     "@angular/router": "^22.0.0",
     "@angular/ssr": "^22.0.3",
     "@supabase/supabase-js": "^2.110.0",
+    "dotenv": "^17.4.2",
     "express": "^5.1.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
