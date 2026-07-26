@@ -1,13 +1,13 @@
 .loading-placeholder {
-  height: 200px;
+  height: 12.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 16px;
-  margin-top: 24px;
+  margin-top: 1.5rem;
 
   p {
-    font-size: 18px;
+    font-size: 1.125rem;
     font-family: Agbalumo;
     color: #424242;
   }

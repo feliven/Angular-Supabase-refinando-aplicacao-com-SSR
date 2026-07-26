@@ -10,42 +10,48 @@
       <h2>Itens do carrinho</h2>
       @for (item of cartItems(); track $index) {
         <div class="cart-item">
-          <img [src]="item.product.image" alt="{{ item.product.title }}" />
-          <div class="item-info">
+          <div class="cart-item-description">
+            <img [src]="item.product.image" alt="{{ item.product.title }}" />
             <h3>{{ item.product.title }}</h3>
-            <mat-form-field appearance="outline">
-              <mat-select
-                [(value)]="item.quantity"
-                (selectionChange)="updateQuantity(item.product.id, $event.value)"
-              >
-                @for (quantity of getQuantities(item.quantity); track $index) {
-                  <mat-option [value]="quantity">
-                    {{ quantity }}
-                  </mat-option>
-                }
-              </mat-select>
-            </mat-form-field>
           </div>
-          <p>R$ {{ item.product.price * item.quantity | number: '1.2-2' }}</p>
-          <div class="delete-container">
-            <button mat-icon-button (click)="removeItem(item.product.id)">
-              <mat-icon>delete</mat-icon>
-            </button>
-            <span>Deletar</span>
+          <div class="cart-item-options">
+            <div class="item-select-quantity">
+              <mat-form-field appearance="outline">
+                <mat-select
+                  [(value)]="item.quantity"
+                  (selectionChange)="updateQuantity(item.product.id, $event.value)"
+                >
+                  @for (quantity of getQuantities(item.quantity); track $index) {
+                    <mat-option [value]="quantity">
+                      {{ quantity }}
+                    </mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <p>R$ {{ item.product.price * item.quantity | number: '1.2-2' }}</p>
+            <div class="delete-container">
+              <button mat-icon-button (click)="removeItem(item.product.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+              <span>Deletar</span>
+            </div>
           </div>
         </div>
       }
     </mat-card>
 
     <mat-card class="total-container">
-      <h3>Total</h3>
+      <h2>Total</h2>
       <mat-divider></mat-divider>
       <div>
         <p>R$ {{ totalValue() | number: '1.2-2' }}</p>
-        <button mat-raised-button color="primary" (click)="finalizePurchase()">
-          FINALIZAR O PAGAMENTO
-        </button>
-        <button mat-stroked-button (click)="continueShopping()">CONTINUAR COMPRANDO</button>
+        <div class="buying-options">
+          <button mat-raised-button color="primary" (click)="finalizePurchase()">
+            FINALIZAR O PAGAMENTO
+          </button>
+          <button mat-stroked-button (click)="continueShopping()">CONTINUAR COMPRANDO</button>
+        </div>
       </div>
     </mat-card>
   </div>

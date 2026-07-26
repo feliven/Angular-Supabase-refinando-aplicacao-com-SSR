@@ -5,14 +5,15 @@ footer {
   display: flex;
   flex-direction: column;
   gap: 24px;
-  padding: 16px;
-  width: 100%;
+  padding: var(--padding-footer);
+  width: calc(100vw - var(--padding-footer) * 2);
+  margin-top: 1rem;
 }
 
 .social-icons,
 .footer-text {
   font-family: Roboto;
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 .social-icons {
@@ -22,6 +23,6 @@ footer {
 }
 
 .social-icons img {
-  margin-left: 8px;
-  width: 24px;
+  margin-left: 0.5rem;
+  width: 1.5rem;
 }
